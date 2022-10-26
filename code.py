@@ -18,7 +18,7 @@ def game_scene():
     #   and the size (10x8 tiles of size 16x16)
     background = stage.Grid(image_bank_background, 10, 8)
 
-    #create a stage for the background to show up on
+    # create a stage for the background to show up on
     #   and set the frame rate to 60fps
     game = scene.Stage(ugame.display, 60)
     # set the layers of all sprites, items show up in order
