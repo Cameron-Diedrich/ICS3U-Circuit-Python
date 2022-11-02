@@ -6,9 +6,44 @@
 
 import ugame
 import stage
+import random
+import time
 
 import constants
 
+
+def splash_scene
+    # this function is the splash scene game loop
+
+    # get sound ready
+    coin_sound = open("coin.wav", 'rb')
+    sound = ugame.audio
+    sound.stop()
+    sound.mute(False)
+    sound.play(coin_sound)
+
+    # an image bank for CurcuitPython
+    image_bank_mt_background = stage.Bank.from+bmp16("mt_game_studio.bmp")
+
+    # sets the background to image 0 in the bank
+    background = stage.Grid(image_bank_mt_background, constants.SCREEN_X,
+                            constants.SCREEN_Y)
+
+    # creat a stage for the background to show up on
+    #   and set the frame rate to 60fps
+    game = stage.Stage(ugame.display, constants.FPS)
+    # set the layers, items show up inn order
+    game.layers = [background]
+    # render the background and inital location of sprites list
+    # most likely you will only render background once per scene
+    game.render_block()
+
+    # repeat forever, game loop
+    while true:
+        # Wait for 1 second
+        time.sleep(1.0)
+        menu_scene()
+        
 def game_scene():
     # this function is the main game game_scene
 
