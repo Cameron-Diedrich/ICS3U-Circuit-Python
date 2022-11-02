@@ -11,22 +11,29 @@ import ugame
 def game_scene():
     # his function is the main game game_scene
 
-    # image banks for CircuitPython
-    image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+image_bank_background = stage.Bank.from_bmp16("space_aliens_background.bmp")
+    image_bank_sprites = stage.Bank.from_bmp16("space_aliens.bmp")
 
-    # set the background to image 0 in the  image bank
-    #   and the size (10x8 tiles of size 16x16)
-    background = stage.Grid(image_bank_background, 10, 8)
+    #buttons that you want to keep state information on
+    a_button = constants.button_state["button_up"]
+    b_button = constants.button_state["button_up"]
+    start_button = constants.button_state["button_up"]
+    select_button = constants.button_state["button_up"]
 
-    # create a stage for the background to show up on
-    #   and set the frame rate to 60fps
-    game = stage.Stage(ugame.display, 60)
+    # get sound ready
+    pew_sound = open("pew.wav", 'rb')
+    sound = ugame.audio
+    sound.stop()
+    sound.mute(False)
 
-    # set the layers of all sprites, items show up in order
-    game.layers = [background]
+    background = stage.Grid(image_bank_background, constants.SCREEN_GRID_X, constants.SCREEN_GRID_Y)
 
-    # render all sprites
-    #   most likely you will only render the background once per scene
+    ship = stage.Sprite(image_bank_sprites, 5, 75, constants.SCREEN_Y - (2 * constants.SPRITE_SIZE))
+
+    alien = stage.Sprite(image_bank_sprites, 9, int(constants.SCREEN_X / 2 - constants.SPRITE_SIZE / 2), 16)
+
+    game = stage.Stage(ugame.display, constants.FPS)
+    game.layers = [ship] + [alien] + [background]
     game.render_block()
 
     # respect forever, game loop
