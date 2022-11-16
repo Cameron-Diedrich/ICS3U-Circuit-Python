@@ -234,3 +234,4 @@ for laser_number in range(constants.TOTAL_NUMBER_OF_LASERS):
 
 if __name__ == "__main__":
     splash_scene()
+    
