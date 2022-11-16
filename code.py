@@ -236,6 +236,4 @@ def game_scene():
 
 if __name__ == "__main__":
     menu_scene()
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
+
