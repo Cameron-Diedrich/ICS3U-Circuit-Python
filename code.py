@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-# Created by: Cameron Diedrich
-# Created on: November 2022
-# This program is the "Space Aliens" program on the PyBadge
+# Created by: Kyanh Pham
+# Created on: Oct 2022
+# This program is the "Space Aliens" program on the PyBadge.
 
 import random
 import time
@@ -16,7 +16,7 @@ def splash_scene():
     # this function is the splash scene game loop
 
     # get sound ready
-    coin_sound = open("con.wav", "rb")
+    coin_sound = open("coin.wav", "rb")
     sound = ugame.audio
     sound.stop()
     sound.mute(False)
@@ -154,12 +154,20 @@ def game_scene():
         16,
     )
 
+# create list of lasers for when we shoot
+lasers = []
+for laser_number in range(constants.TOTAL_NUMBER_OF_LASERS):
+    a_single_laser = stage.Sprite(image_bank_sprites, 10,
+     constants.OFF_SCREEN_X,
+      constants.OFF_SCREEN_Y)
+    lasers.append(a_single_laser)
+
     # create a stage for the background to show up on
     #  and set the frame rate to 60 fps
     game = stage.Stage(ugame.display, constants.FPS)
 
     # set the layers of all sprites, items show up in order
-    game.layers = [ship] + [alien] + [background]
+    game.layers = lasers + [ship] + [alien] + [background]
 
     # render all sprites
     game.render_block()
@@ -201,12 +209,28 @@ def game_scene():
             pass
 
         if a_button == constants.button_state["button_just_pressed"]:
-            sound.play(pew_sound)
+            # fire a laser, if we have enough power(have not used up all the lasers)
+            for laser_number in range(len(lasers)):
+                if lasers[laser_number].x < 0:
+                    lasers[laser_number].move(ship.x, ship.y)
+                    sound.play(pew_sound)
+                    break
+        
 
-        game.render_sprites([ship] + [alien])
+        # each frame move the lasers, that have been fired up
+        for laser_number in range(len(lasers)):
+            if lasers[laser_number].x > 0:
+                lasers[laser_number].move(lasers[laser_number].x,
+                lasers[laser_number.y-
+                constants.LASER_SPEED])
+                if lasers[laser_number].y < constants.OFF_TOP_SCREEN:
+                    lasers[laser_number].move(constants.OFF_SCREEN_X,
+                    constants.OFF_SCREEN_Y)
+                    
+
+        game.render_sprites(lasers + [ship] + [alien])
         game.tick()
 
 
 if __name__ == "__main__":
-    menu_scene()
-    
+    splash_scene()
