@@ -154,6 +154,7 @@ def game_scene():
         16,
     )
 
+
 # create list of lasers for when we shoot
 lasers = []
 for laser_number in range(constants.TOTAL_NUMBER_OF_LASERS):
